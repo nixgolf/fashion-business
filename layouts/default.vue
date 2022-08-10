@@ -1,41 +1,43 @@
 <template>
-  <div>
-    <nav
-      class="navbar header has-shadow is-primary"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-          <img src="~assets/buefy.png" alt="Buefy" height="28" />
-        </a>
-
-        <div class="navbar-burger">
-          <span />
-          <span />
-          <span />
+    <section class="hero is-info is-fullheight">
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="#">
+                            <!-- <img src="~assets/buefy.png" alt="Logo">-->
+                        </a>
+                        <span class="navbar-burger burger" data-target="navbarMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </div>
+                    <div id="navbarMenu" class="navbar-menu">
+                        <div class="navbar-end">
+                        <!-- 
+                            <span v-for="(item, key) of items" :key="key" class="navbar-item">
+                                <NuxtLink :to="item.to" exact-active-class="is-active" class="button is-white is-outlined">
+                                    <span class="icon">
+                                        <b-icon :icon="item.icon" />
+                                    </span>
+                                    <span>{{ item.title }}</span>
+                                </NuxtLink>
+                            </span>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </div>
-      </div>
-    </nav>
 
-    <section class="main-content columns">
-      <aside class="column is-2 section">
-        <p class="menu-label is-hidden-touch">General</p>
-        <ul class="menu-list">
-          <li v-for="(item, key) of items" :key="key">
-            <NuxtLink :to="item.to" exact-active-class="is-active">
-              <b-icon :icon="item.icon" /> {{ item.title }}
-            </NuxtLink>
-          </li>
-        </ul>
-      </aside>
+        <div class="hero-body">
+            <Nuxt />
+        </div>
 
-      <div class="container column is-10">
-        <Nuxt />
-      </div>
     </section>
-  </div>
 </template>
+
 
 <script>
 export default {
@@ -58,3 +60,14 @@ export default {
   },
 }
 </script>
+
+<style>
+  .hero.is-info {
+    background: linear-gradient(
+        rgba(0 0 0 / 90%),
+        rgba(0 0 0 / 60%)
+      ), url('~assets/fb.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+</style>
