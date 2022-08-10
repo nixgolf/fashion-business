@@ -27,7 +27,8 @@
                         <b-input v-model="activ4" placeholder="0000" minlength="4" maxlength="4" class="keynumber" size="is-large" disabled></b-input>
                     </b-field>
                 </div>
-                <b-button type="is-primary">Generate</b-button>
+                <b-button type="is-primary" @click="generate">Generate</b-button>
+                <p class="has-text-danger">{{ error }}</p>
             </div>
         </div>
     </div>
@@ -35,6 +36,7 @@
 
 
 <script>
+import axios from "axios";
 
 export default {
   name: 'IndexPage',
@@ -50,7 +52,42 @@ export default {
           activ2: "0000",
           activ3: "0000",
           activ4: "0000",
+          error: ""
       }
+  },
+  methods: {
+    generate() {
+      const perso = ""+this.perso1+this.perso2+this.perso3+this.perso4;
+      console.log(perso)
+      if (perso.length !== 16) {
+        this.error = "Personal Code is wrong"
+      } else {
+        this.error = ""
+        axios.get("https://restless-bird-c5e0.nixgolf.workers.dev/?perso="+perso)
+            .then(response => {
+              if (response.data.error !== false) {
+                this.error = response.data.error
+              } else {
+                let activkey = ""
+                for (let i = 0; i < response.data.activation.length; i++) {
+                  if (response.data.activation[i] > 9) {
+                    activkey += "" + response.data.activation[i]
+                  } else {
+                    activkey += "0" + response.data.activation[i]
+                  }
+                }
+                if (activkey.length !== 16) {
+                  this.error = "Personal Code is wrong"
+                } else {
+                  this.activ1 = activkey.substring(0,4)
+                  this.activ2 = activkey.substring(4,8)
+                  this.activ3 = activkey.substring(8,12)
+                  this.activ4 = activkey.substring(12,16)
+                }
+              }
+            })
+      }
+    }
   }
 }
 </script>
